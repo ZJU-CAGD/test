@@ -16,31 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `Users`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Users` (
-  `id` int(10) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '',
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) NOT NULL DEFAULT '',
+  `password` char(32) NOT NULL,
+  `isAdmin` tinyint(4) NOT NULL DEFAULT '0',
+  `birthday` int(10) unsigned NOT NULL DEFAULT '19000101',
   `sex` char(2) NOT NULL DEFAULT 'M',
-  `birthday` int(10) unsigned NOT NULL DEFAULT '0',
-  `userinfo` varchar(255) NOT NULL DEFAULT '',
-  `isadmin` tinyint(1) NOT NULL DEFAULT '0',
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `Users` WRITE;
-/*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'Administer','M',19900101,'This_is_the_Administer',1);
-/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'tracy','123456',0,20010101,'M'),(2,'hahaha','123456',0,20030201,'F'),(3,'mingbai','911009',0,20030809,'F'),(5,'hahaha2','a689145a72839af4e93d8b1820dcf8ca',0,20030102,'F');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-17 20:57:04
+-- Dump completed on 2016-10-24 18:59:09
