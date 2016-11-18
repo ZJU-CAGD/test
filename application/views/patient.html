@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>病人信息界面</title>
+
+    <link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Toastr style -->
+    <link href="<?php echo base_url(); ?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="<?php echo base_url(); ?>js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+    <link href="<?php echo base_url(); ?>css/animate.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/style.css" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle" src="<?php echo base_url(); ?>img/profile_small.jpg" />
+                             </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"> <?php echo $doctor_name; ?></strong>
+                             </span> <span class="text-muted text-xs block">个人选项 <b class="caret"></b></span> </span> </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="<?php echo site_url('users/profile/'.$username); ?>">个人信息</a></li>
+                                <li><a href="<?php echo site_url('users/contacts/'); ?>">修改密码</a></li>
+                                <li><a href="">其他</a></li>
+								<!--可添加其他个人选项-->
+                                <li class="divider"></li>
+                                <li><a href="<?php echo site_url('users/login_out/'); ?>">退出</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                           <img alt="image" class="img-circle" src="<?php echo base_url(); ?>img/profile_small.jpg" />
+                        </div>
+                    </li>
+                    <li class="active">
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">功能栏</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="#">保存</a></li>
+                            <li><a href="#">打印</a></li>
+							 <li><a href="#">保存</a></li>
+                            <li><a href="#">编辑病例</a></li>
+                            <li><a href="#">新增病例</a></li>
+                            <li><a href="#">修改病例</a></li>
+                            <li><a href="#">肿瘤识别显示</a></li>
+                            <li><a href="#">浅层次特征显示</a></li>
+							<li><a href="#">高级搜索</a></li>
+                         
+                        </ul>
+                    </li> 
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href=""><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                <div class="form-group">
+                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <span class="m-r-sm text-muted welcome-message">欢迎登录系统</span>
+                </li>
+         
+                <li>
+                    <a href="<?php echo site_url('users/login_out/'); ?>">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+        </div>
+                      <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-4">
+                    <h2><?php echo $patients_item['name'];?>的检查列表</h2>
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <strong>一共有<?php echo $patients_item['checknumber'];?>次就诊</strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+			<div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper wrapper-content animated fadeInUp">
+
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>病例列表：</h5>
+                            <div class="ibox-tools">
+                                <a href="" class="btn btn-primary btn-xs">新建一个病例列表</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row m-b-sm m-t-sm">
+                                <div class="col-md-1">
+                                    <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" ><i class="fa fa-refresh"></i> 刷新</button>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                                </div>
+                            </div>
+
+                            <div class="project-list">
+
+                                <table class="table table-hover">
+                                    <tbody>
+                                    <tr>
+								    
+                                        <td class="project-status">
+                                         <h5>病例ID</h5>
+                                        </td>
+                                        <td class="project-status">
+                                         <h5>病人姓名</h5>
+                                        </td>
+                                        <td class="project-status">
+                                         <h5>主治医生</h5>
+                                        </td>
+										 <td class="project-status">
+                                         <h5>检查类别</h5>
+                                        </td>
+                                        <td class="project-status">
+                                         <h5>检查时间</h5>
+                                        </td>                                
+                                        <td class="project-status">
+                                         <h5>检查序列数目</h5>
+                                        </td>
+										
+                                       
+                                       <td class="project-actions">
+                                            <a href="" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 详细信息 </a>
+                                           
+                                        </td>
+                                    </tr>
+
+                                    <?php
+                                    foreach ($treats_item as $key => $data):
+                                    ?>
+									<tr>								
+                                        <td class="project-status">
+                                         <h5><?php echo $data['belongs_to_patientID']; ?></h5>
+                                        </td>
+                                        <td class="project-status">
+                                         <h5><?php echo $data['Patient_name']; ?></h5>
+                                        </td>
+                                        <td class="project-status">
+                                         <h5><?php echo $data['Doctor_name']; ?></h5>
+                                        </td>
+                                        <td class="project-status">
+                                         <h5><?php echo $data['treat_type']; ?></h5>
+                                        </td>          
+                                         <td class="project-status">
+                                         <h5><?php echo $data['treat_date']; ?></h5>
+                                         </td>
+										  <td class="project-status">
+                                         <h5><?php echo $data['treat_series_number']; ?>个检查序列</h5>
+                                        </td>
+                                       <td class="project-actions">
+                                            <a href="序列界面.html" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 详细信息 </a>                           
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+    <!-- Mainly scripts -->
+    <script src="<?php echo base_url(); ?>js/jquery-2.1.1.js"></script>
+    <script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Flot -->
+    <script src="<?php echo base_url(); ?>js/plugins/flot/jquery.flot.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/flot/jquery.flot.pie.js"></script>
+
+    <!-- Peity -->
+    <script src="<?php echo base_url(); ?>js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="<?php echo base_url(); ?>js/demo/peity-demo.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="<?php echo base_url(); ?>js/inspinia.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/pace/pace.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="<?php echo base_url(); ?>js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- GITTER -->
+    <script src="<?php echo base_url(); ?>js/plugins/gritter/jquery.gritter.min.js"></script>
+
+    <!-- Sparkline -->
+    <script src="<?php echo base_url(); ?>js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Sparkline demo data  -->
+    <script src="<?php echo base_url(); ?>js/demo/sparkline-demo.js"></script>
+
+    <!-- ChartJS-->
+    <script src="<?php echo base_url(); ?>js/plugins/chartJs/Chart.min.js"></script>
+
+    <!-- Toastr -->
+    <script src="<?php echo base_url(); ?>js/plugins/toastr/toastr.min.js"></script>
+</body>
+</html>
