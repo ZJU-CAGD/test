@@ -15,15 +15,19 @@ class Users_model extends CI_Model {
 	public function set_users()
 	{
 		$this->load->helper('url');
-
 		$data = array(
-			'username' => $this->input->post('username'),
-			'password' => md5($this->input->post('password')),
-			'birthday' => $this->input->post('birthday'),
-			'sex' => $this->input->post('sex'),
+			'password' => $this->input->post('password')
 		);
-
 		return $this->db->insert('users', $data);
+	}
+
+	public function update_password()
+	{
+		$this->load->helper('url');
+		$data = array(
+			'password' => $this->input->post('password2')
+		);
+		return $this->db->update( 'users', $data, array('username' => $this->input->post('username')) );
 	}
 }
 ?>
